@@ -2,6 +2,7 @@
 
 namespace Modules\Forum\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
@@ -13,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Forum extends Model implements HasMedia
 {
-    use SoftDeletes, NodeTrait, HasSlug, InteractsWithMedia;
+    use SoftDeletes, NodeTrait, HasSlug, InteractsWithMedia, HasFactory;
 
     /**
      * Get the options for generating the slug.
@@ -54,10 +55,10 @@ class Forum extends Model implements HasMedia
 
     public function latestDescendantsPost()
     {
-        $last = null;
+        $last = 0;
         foreach($this->descendants as $descendant) {
             if($descendant->last) {
-                if($descendant->last->id > $last->id) $last = $descendant->last;
+                if($descendant->last->id > $last) $last = $descendant->last;
             }
         }
         return $last;

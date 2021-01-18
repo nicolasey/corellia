@@ -1,6 +1,6 @@
 <?php
 return [
     "owner" => [
-        "class" => \App\User::class,
+        "class" => \App\Models\User::class,
     ]
 ];

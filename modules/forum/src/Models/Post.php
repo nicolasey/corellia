@@ -1,13 +1,14 @@
 <?php
 namespace Modules\Forum\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Personnages\Models\Personnage;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $guarded = [];
 

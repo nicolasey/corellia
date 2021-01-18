@@ -1,16 +1,17 @@
 <?php
 namespace Modules\Forum\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Personnages\Models\Personnage;
-use Overtrue\LaravelFollow\Traits\CanBeFollowed;
+use Overtrue\LaravelFollow\Followable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Topic extends Model
 {
-    use SoftDeletes, HasSlug, CanBeFollowed;
+    use SoftDeletes, HasSlug, Followable, HasFactory;
 
     protected $guarded = [];
 

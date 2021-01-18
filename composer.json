@@ -12,10 +12,15 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^8.12",
+        "laravel/nova": "*",
+        "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "laravel/nova": "*"
+        "overtrue/laravel-follow": "^2.2",
+        "spatie/laravel-medialibrary": "^9.4",
+        "spatie/laravel-sluggable": "^2.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

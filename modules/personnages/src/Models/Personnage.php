@@ -1,26 +1,22 @@
 <?php
 namespace Modules\Personnages\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Economy\Contracts\EconomicActor;
-use Modules\Economy\Traits\HasEconomy;
-use Modules\Factions\Traits\InGroups;
 use Modules\Forum\Traits\PostsInForum;
-use Modules\Inventory\Contracts\HasInventoryContract;
-use Modules\Inventory\Traits\HasInventory;
 use Modules\Personnages\Events\PersonnageCreated;
 use Modules\Personnages\Events\PersonnageDeleted;
 use Modules\Personnages\Events\PersonnageUpdated;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Overtrue\LaravelFollow\Followable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Personnage extends Model implements HasMedia, HasInventoryContract, EconomicActor
+class Personnage extends Model implements HasMedia
 {
-    use SoftDeletes, HasSlug, InteractsWithMedia, HasRolesAndAbilities, HasEconomy, InGroups, PostsInForum, HasInventory;
+    use SoftDeletes, HasSlug, InteractsWithMedia, PostsInForum, Followable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +27,7 @@ class Personnage extends Model implements HasMedia, HasInventoryContract, Econom
 
     protected $hidden = ["deleted_at"];
 
-    protected $with = ['assignations'];
+    protected $with = [];
 
     public static $rules = [
         "name" => "unique:personnages|min:3|required",
@@ -43,6 +39,12 @@ class Personnage extends Model implements HasMedia, HasInventoryContract, Econom
         "updated" => PersonnageUpdated::class,
         "deleted" => PersonnageDeleted::class,
     ];
+
+    /** @return \Modules\Personnages\Factories\PersonnageFactory */
+    protected static function newFactory()
+    {
+        return \Modules\Personnages\Factories\PersonnageFactory::new();
+    }
 
     /**
      * Get the options for generating the slug.
