@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -80,7 +79,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,13 +164,17 @@ return [
         /*
          * Package Service Providers...
          */
+        Modules\Auth\AuthModuleProvider::class,
+        Modules\Personnages\PersonnageServiceProvider::class,
+        Modules\Personnages\PersonnageEventServiceProvider::class,
+        Modules\Forum\ForumServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
