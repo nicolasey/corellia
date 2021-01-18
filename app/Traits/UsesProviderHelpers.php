@@ -1,21 +1,10 @@
 <?php
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Illuminate\Database\Eloquent\Factories\Factory as EloquentFactory;
 
 trait UsesProviderHelpers
 {
-    /**
-     * Register factories.
-     *
-     * @param  string  $path
-     * @return void
-     */
-    protected function registerEloquentFactoriesFrom($path)
-    {
-        $this->app->make(EloquentFactory::class)->load($path);
-    }
-
     /**
      * Set config file
      *

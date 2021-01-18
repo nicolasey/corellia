@@ -18,7 +18,7 @@ class ForumServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerEloquentFactoriesFrom(__DIR__."/../database/factories");
+        //
     }
 
     /**
