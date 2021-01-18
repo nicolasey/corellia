@@ -1,25 +1,12 @@
 <?php
-namespace Modules\Forum;
+namespace Modules\Auth;
 
-use App\Traits\UsesProviderHelpers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class ForumServiceProvider extends ServiceProvider
+class AuthModuleProvider extends ServiceProvider 
 {
-    use UsesProviderHelpers;
-
-    private $namespace = "Modules\Forum\Controllers";
-
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
+    protected $namespace = "Modules\Auth\Controllers";
 
     /**
      * Bootstrap services.
@@ -30,6 +17,22 @@ class ForumServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
         $this->loadMigrationsFrom(__DIR__."/../database/migrations");
+    }
+
+    /**
+     * Set config file
+     *
+     * @param string $path
+     * @param string $key
+     * @return void
+     */
+    private function setConfig($path, $key)
+    {
+        $this->mergeConfigFrom($path, $key);
+
+        $this->publishes([
+            $path => config_path($key.".php"),
+        ], "config");
     }
 
     /**
