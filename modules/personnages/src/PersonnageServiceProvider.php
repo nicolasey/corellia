@@ -3,7 +3,6 @@ namespace Modules\Personnages;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 
 class PersonnageServiceProvider extends ServiceProvider
 {
@@ -22,6 +21,21 @@ class PersonnageServiceProvider extends ServiceProvider
     }
 
     /**
+     * Add api routes in provider using standard 'api' middleware
+     *
+     * @return void
+     */
+    private function mapApiRoutes()
+    {
+        Route::namespace($this->namespace)
+            ->middleware("api")
+            ->prefix("api")
+            ->group(function () {
+                require __DIR__.'/../api.php';
+            });
+    }
+
+    /**
      * Set config file
      *
      * @param string $path
@@ -35,33 +49,5 @@ class PersonnageServiceProvider extends ServiceProvider
         $this->publishes([
             $path => config_path($key.".php"),
         ], "config");
-
-        $this->mapApiRoutes();
-    }
-
-    /**
-     * Add api routes in provider using standard 'api' middleware
-     *
-     * @return void
-     */
-    private function mapApiRoutes()
-    {
-        Route::namespace($this->namespace)
-            ->middleware("api")
-            ->prefix("api")
-            ->group(function () {
-                require __DIR__.'/Http/routes/api.php';
-            });
-    }
-
-    /**
-     * Register factories.
-     *
-     * @param  string  $path
-     * @return void
-     */
-    protected function registerEloquentFactoriesFrom($path)
-    {
-        $this->app->make(EloquentFactory::class)->load($path);
     }
 }

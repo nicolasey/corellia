@@ -43,7 +43,7 @@ class ForumServiceProvider extends ServiceProvider
             ->middleware("api")
             ->prefix("api")
             ->group(function () {
-                require __DIR__. '/../routes.php';
+                require __DIR__.'/../api.php';
             });
     }
 }
