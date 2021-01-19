@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['only' => ['me', 'update', 'destroy']]);
+        $this->middleware('auth:api', ['only' => ['update', 'destroy']]);
     }
 
     /**
@@ -30,14 +30,17 @@ class UsersController extends Controller
      */
     public function store()
     {
-        $user = User::create(request()->input());
-        $user->load(['personnages']);
-        $token = $user->createToken(env("APP_NAME"))->accessToken;
+        $input = request()->only(['email', 'password']);
+        $rules = [
+            "email" => "email",
+            "password" => "string|min:6"
+        ];
+        request()->validate($rules, $input);
 
-        return response()->json([
-            "user" => $user,
-            "token" => $token
-        ]);
+        $user = User::create($input);
+        $token = Auth::login($user);
+
+        return response()->json(compact($user, $token));
     }
 
     /**
@@ -52,16 +55,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Get current user
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(request()->user());
-    }
-
-    /**
      * Update an user
      *
      * @param User $user
@@ -69,7 +62,13 @@ class UsersController extends Controller
      */
     public function update(User $user)
     {
-        $user->update(request()->input());
+        $input = request()->only(['email', 'password']);
+        $rules = [
+            "email" => "email",
+            "password" => "string|min:6"
+        ];
+        
+        $user->update($input);
         return response()->json($user);
     }
 
