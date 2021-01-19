@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers;
+namespace Modules\Auth\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Carbon\Carbon;
-use Exception;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Exception;
 use Modules\Auth\Events\UserLoggedIn;
 use Modules\Auth\Events\UserLoggedOut;
 
@@ -18,7 +18,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
@@ -29,31 +29,27 @@ class AuthController extends Controller
     public function login()
     {
         try {
+            // Validate request
             $rules = [
                 "email" => "email|required",
                 "password" => "string|min:6|required"
             ];
             request()->validate($rules);
     
+            // Check credentials
             $credentials = request(['email', 'password']);
-    
-            if(!Auth::attempt($credentials)) {
+            if(!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(["message" => "Login Failed"], 401);
             }
-    
-            $user = User::where('email', $credentials['email'])->find();
-    
-            if(!Hash::check($credentials['password'], $user->password)) {
-                return response()->json(["message" => "Login Failed"], 401);
-            }
-    
-            $token = $user->createToken(`authToken`)->plainTextToken;
-            $user->load('personnages', 'activePersonnage');
-    
+
+            // Get authenticated user
+            $user = User::where('email', $credentials['email'])->first();
+            $user->load('personnages');
+
             event(new UserLoggedIn($user));
-            return response()->json(compact($user, $token), 200);
+            return response()->json(['user' => $user, 'token' => $token], 200);
         } catch(Exception $e) {
-            return response()->json(["message" => "Login Failed"], 401);
+            return response()->json(["message" => "Login Failed exception"], 401);
         }
     }
 
@@ -64,9 +60,35 @@ class AuthController extends Controller
      */
     public function me()
     {
-        $user = request()->user();
-        $user->load(['personnages', 'activePersonnage']);
+        $user = Auth::user();
+        $user->load("personnages");
         return response()->json($user);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(Auth::refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60
+        ]);
     }
 
     /**
@@ -76,9 +98,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $tokens = request()->user()->tokens;
-        foreach ($tokens as $token) $token->delete();
-        event(new UserLoggedOut(request()->user()->id));
+        $user = Auth::user();
+        Auth::logout();
+        event(new UserLoggedOut($user->id));
 
         return response()->json(['message' => 'Successfully logged out']);
     }
