@@ -15,7 +15,7 @@ class AuthModuleProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mapApiRoutes();
+        $this->registerRoutes();
         $this->loadMigrationsFrom(__DIR__."/../database/migrations");
     }
 
@@ -36,17 +36,28 @@ class AuthModuleProvider extends ServiceProvider
     }
 
     /**
-     * Add api routes in provider using standard 'api' middleware
+     * Register the package routes.
      *
      * @return void
      */
-    private function mapApiRoutes()
+    protected function registerRoutes()
     {
-        Route::namespace($this->namespace)
-            ->middleware("api")
-            ->prefix("api")
-            ->group(function () {
-                require __DIR__.'/../api.php';
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../api.php');
         });
+    }
+
+    /**
+     * Get the Nova route group configuration array.
+     *
+     * @return array
+     */
+    protected function routeConfiguration()
+    {
+        return [
+            'namespace' => $this->namespace,
+            'prefix' => 'auth',
+            'middleware' => 'api',
+        ];
     }
 }
