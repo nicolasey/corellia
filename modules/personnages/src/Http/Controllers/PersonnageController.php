@@ -10,7 +10,7 @@ use Modules\Personnages\Events\PersonnageKilled;
 use Modules\Personnages\Events\PersonnageResurrected;
 use Modules\Personnages\Events\PersonnageUpdated;
 use Modules\Personnages\Models\Personnage;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class PersonnageController extends Controller
 {
