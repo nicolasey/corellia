@@ -60,7 +60,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        $user = Auth::user();
+        $user = Auth::userOrFail();
         $user->load("personnages");
         return response()->json($user);
     }
