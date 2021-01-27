@@ -2,6 +2,7 @@
 namespace Modules\Personnages\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\Personnages\Events\PersonnageActivated;
 use Modules\Personnages\Events\PersonnageCreated;
 use Modules\Personnages\Events\PersonnageDeactivated;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class PersonnageController extends Controller
 {
-    protected $fields = ["name", "bio", "signature", "aversions", "affections", "job", "title", "hide", "owner_id", "location"];
+    protected $fields = ["name", "bio", "signature", "aversions", "affections", "job", "title", "hide", "location"];
 
     /**
      * Get all personnages
@@ -56,7 +57,7 @@ class PersonnageController extends Controller
      */
     public function show(Personnage $personnage)
     {
-        return $personnage->load("owner", "account", "fiche", "fiche.lines");
+        return $personnage->load("owner");
     }
 
     /**
@@ -67,10 +68,13 @@ class PersonnageController extends Controller
      */
     public function store()
     {
+        $owner = Auth::user();
         $data = request()->only($this->fields);
 
         try {
             $personnage = Personnage::create($data);
+            $personnage->owner_id = $owner->id;
+            $personnage->save();
 
             /**
              * If there is an avatar, attach it to newly created personnage
