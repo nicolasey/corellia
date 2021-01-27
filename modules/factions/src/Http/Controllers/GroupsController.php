@@ -33,6 +33,7 @@ class GroupsController extends Controller
      */
     public function show(Group $group)
     {
+        $group->load(config("groups.loads.show"));
         return $group;
     }
 
