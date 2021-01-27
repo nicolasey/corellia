@@ -76,6 +76,7 @@ class ForumController extends Controller
 
         $parent = (request()->only("parent_id")) ? request()->only("parent_id")['parent_id'] : null;
         if($parent) $newParent = Forum::findOrFail($parent);
+        else $newParent = false;
 
         // Check if forum has to move AND has post
         $hasMoved = ($newParent && ($newParent->id !== $forum->parent_id));
