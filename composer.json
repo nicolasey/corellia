@@ -12,10 +12,16 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^8.12",
+        "laravel/nova": "*",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "laravel/nova": "*"
+        "overtrue/laravel-follow": "^2.2",
+        "silber/bouncer": "v1.0.0-rc.10",
+        "spatie/laravel-medialibrary": "^9.4",
+        "spatie/laravel-sluggable": "^2.6",
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -42,12 +48,20 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Modules\\Auth\\": "modules/auth/src",
+            "Modules\\Forum\\": "modules/forum/src",
+            "Modules\\Personnages\\": "modules/personnages/src",
+            "Modules\\Factions\\": "modules/factions/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Modules\\Auth\\Tests\\": "modules/auth/tests",
+            "Modules\\Forum\\Tests\\": "modules/forum/tests",
+            "Modules\\Personnages\\Tests\\": "modules/personnages/tests",
+            "Modules\\Factions\\Tests\\": "modules/factions/tests"
         }
     },
     "minimum-stability": "dev",
