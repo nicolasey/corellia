@@ -51,7 +51,8 @@
             "Database\\Seeders\\": "database/seeders/",
             "Modules\\Auth\\": "modules/auth/src",
             "Modules\\Forum\\": "modules/forum/src",
-            "Modules\\Personnages\\": "modules/personnages/src"
+            "Modules\\Personnages\\": "modules/personnages/src",
+            "Modules\\Factions\\": "modules/factions/src"
         }
     },
     "autoload-dev": {
@@ -59,7 +60,8 @@
             "Tests\\": "tests/",
             "Modules\\Auth\\Tests\\": "modules/auth/tests",
             "Modules\\Forum\\Tests\\": "modules/forum/tests",
-            "Modules\\Personnages\\Tests\\": "modules/personnages/tests"
+            "Modules\\Personnages\\Tests\\": "modules/personnages/tests",
+            "Modules\\Factions\\Tests\\": "modules/factions/tests"
         }
     },
     "minimum-stability": "dev",
