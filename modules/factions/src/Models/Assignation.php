@@ -1,15 +1,24 @@
 <?php
 namespace Modules\Factions\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Factions\Factories\AssignationFactory;
 
 class Assignation extends Model
 {
+    use HasFactory;
+
     protected $table = "group_elements";
     protected $guarded = [];
     protected $hidden = ['group_id'];
     public $timestamps = false;
     protected $with = ['group'];
+
+    protected static function factory()
+    {
+        return AssignationFactory::new();
+    }
 
     /**
      * Filter to find leader of the group

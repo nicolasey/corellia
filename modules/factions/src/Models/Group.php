@@ -1,8 +1,10 @@
 <?php
 namespace Modules\Factions\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Factions\Factories\GroupFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -10,10 +12,14 @@ use Spatie\Sluggable\SlugOptions;
 
 class Group extends Model implements HasMedia
 {
-    use SoftDeletes, HasSlug, InteractsWithMedia;
+    use SoftDeletes, HasSlug, InteractsWithMedia, HasFactory;
 
     protected $table = "groups";
     protected $guarded = [];
+
+    protected static function factory() {
+        return GroupFactory::new();
+    }
 
     /**
      * Register media collections for the personnage
