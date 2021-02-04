@@ -9,6 +9,7 @@ use Modules\Forum\Traits\PostsInForum;
 use Modules\Personnages\Events\PersonnageCreated;
 use Modules\Personnages\Events\PersonnageDeleted;
 use Modules\Personnages\Events\PersonnageUpdated;
+use Modules\Personnages\Traits\HasAvatar;
 use Overtrue\LaravelFollow\Followable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,7 +18,14 @@ use Spatie\Sluggable\SlugOptions;
 
 class Personnage extends Model implements HasMedia
 {
-    use SoftDeletes, HasSlug, InteractsWithMedia, PostsInForum, Followable, HasFactory, InGroups;
+    use SoftDeletes;
+    use HasSlug;
+    use InteractsWithMedia;
+    use PostsInForum;
+    use Followable;
+    use HasFactory;
+    use InGroups;
+    use HasAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -52,7 +60,7 @@ class Personnage extends Model implements HasMedia
      *
      * @return mixed
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -64,16 +72,6 @@ class Personnage extends Model implements HasMedia
         if(is_numeric($value)) return parent::resolveRouteBinding($value);
         if(is_string($value)) return $this->where('slug', $value)->firstOrFail();
         return parent::resolveRouteBinding($value, $field);
-    }
-
-    /**
-     * Register media collections for the personnage
-     *
-     * @return void
-     */
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('avatar')->singleFile();
     }
 
     /**
