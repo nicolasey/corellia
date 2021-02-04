@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,8 +70,12 @@ class Personnage extends Model implements HasMedia
 
     public function resolveRouteBinding($value, $field = null)
     {
-        if(is_numeric($value)) return parent::resolveRouteBinding($value);
-        if(is_string($value)) return $this->where('slug', $value)->firstOrFail();
+        if (is_numeric($value)) {
+            return parent::resolveRouteBinding($value);
+        } elseif (is_string($value)) {
+            return $this->where('slug', $value)->firstOrFail();
+        }
+
         return parent::resolveRouteBinding($value, $field);
     }
 
@@ -140,10 +145,14 @@ class Personnage extends Model implements HasMedia
     {
         parent::boot();
 
-        static::created(function($model) {
-            if($model->owner) {
+        static::created(function ($model) {
+            if ($model->owner) {
                 $personnages = $model->owner->personnages;
-                foreach ($personnages as $personnage) $personnage->setActive(false);
+
+                foreach ($personnages as $personnage) {
+                    $personnage->setActive(false);
+                }
+
                 $model->setActive(true);
             }
         });
