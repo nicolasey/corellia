@@ -20,7 +20,7 @@ class UserPersonnagesSeeder extends Seeder
         $faction = Group::factory()->create();
         $user = User::factory()->create(["email" => "vador@sith.gal"]);
         $personnages = Personnage::factory()->count(2)->create(['owner_id' => $user->id]);
-        $personnages->each(function($model) use($faction) {
+        $personnages->each(function ($model) use ($faction) {
             Assignation::factory()->create([
                 "group_id" => $faction->id,
                 "element_id" => $model->id,

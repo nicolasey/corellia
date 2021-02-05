@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('xls', function()
-{
+Route::get('xls', function () {
     header('Content-Type: application/excel');
     header('Content-Disposition: attachment; filename="routes.csv"');
 

@@ -17,6 +17,8 @@ class User extends Authenticatable implements JWTSubject
     use HasPersonnages;
     use Followable;
 
+    protected $with = ['followings'];
+
     /**
      * The attributes that are mass assignable.
      *
