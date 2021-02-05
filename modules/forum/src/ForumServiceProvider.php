@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Forum;
 
 use App\Traits\UsesProviderHelpers;
@@ -29,7 +30,7 @@ class ForumServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mapApiRoutes();
-        $this->loadMigrationsFrom(__DIR__."/../database/migrations");
+        $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
     }
 
     /**
@@ -43,7 +44,7 @@ class ForumServiceProvider extends ServiceProvider
             ->middleware("api")
             ->prefix("api")
             ->group(function () {
-                require __DIR__.'/../api.php';
-        });
+                require __DIR__ . '/../api.php';
+            });
     }
 }

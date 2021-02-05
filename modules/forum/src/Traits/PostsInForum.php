@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Forum\Traits;
 
 use Modules\Forum\Models\Post;

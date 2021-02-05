@@ -8,10 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Modules\Personnages\Traits\HasPersonnages;
+use Overtrue\LaravelFollow\Followable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, HasPersonnages;
+    use HasFactory;
+    use Notifiable;
+    use HasPersonnages;
+    use Followable;
 
     /**
      * The attributes that are mass assignable.

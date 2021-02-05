@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Forum\Controllers;
 
 use Modules\Forum\Models\Forum;

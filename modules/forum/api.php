@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,5 +13,7 @@
 
 Route::apiResource('forums', 'ForumController');
 Route::apiResource('forums.topics', 'TopicController');
-Route::get('forums/{forum}/topics/{topic}/follow', 'TopicController@follow')->name('topic.follow')->middleware('jwt.auth');
+Route::get('forums/{forum}/topics/{topic}/follow', 'TopicController@follow')
+    ->name('topic.follow')
+    ->middleware('jwt.auth');
 Route::apiResource('topics.posts', 'PostController');

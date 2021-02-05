@@ -52,7 +52,7 @@ class ForumController extends Controller
 
             $forum = Forum::create($data);
 
-            if($parent) {
+            if ($parent) {
                 $forum->parent_id = $parent->id;
                 $forum->save();
             }
@@ -75,8 +75,11 @@ class ForumController extends Controller
         $data = request()->only(['name', "content"]);
 
         $parent = (request()->only("parent_id")) ? request()->only("parent_id")['parent_id'] : null;
-        if($parent) $newParent = Forum::findOrFail($parent);
-        else $newParent = false;
+        if ($parent) {
+            $newParent = Forum::findOrFail($parent);
+        } else {
+            $newParent = false;
+        }
 
         // Check if forum has to move AND has post
         $hasMoved = ($newParent && ($newParent->id !== $forum->parent_id));
@@ -86,7 +89,7 @@ class ForumController extends Controller
             $forum->update($data);
 
             // Check ancestors last post then
-            if($hasPostsAndMoved) {
+            if ($hasPostsAndMoved) {
                 $newAncestors = $newParent->getAncestors();
                 $newAncestors->prepend($newParent);
 
@@ -134,8 +137,10 @@ class ForumController extends Controller
     {
         foreach ($ancestors as $ancestor) {
             // if ancestor last post is newer, then we stop
-            if($lastPost && $ancestor->lastPost) {
-                if(($ancestor->lastPost->id > $lastPost->id)) break;
+            if ($lastPost && $ancestor->lastPost) {
+                if (($ancestor->lastPost->id > $lastPost->id)) {
+                    break;
+                };
             }
             // if we have not break yet, we evaluate last post
             $ancestor->evaluateLastPost();

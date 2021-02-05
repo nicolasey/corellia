@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Forum\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,14 +12,17 @@ use Spatie\Sluggable\SlugOptions;
 
 class Topic extends Model
 {
-    use SoftDeletes, HasSlug, Followable, HasFactory;
+    use SoftDeletes;
+    use HasSlug;
+    use Followable;
+    use HasFactory;
 
     protected $guarded = [];
 
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')

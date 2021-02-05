@@ -14,12 +14,16 @@ use Spatie\Sluggable\SlugOptions;
 
 class Forum extends Model implements HasMedia
 {
-    use SoftDeletes, NodeTrait, HasSlug, InteractsWithMedia, HasFactory;
+    use SoftDeletes;
+    use NodeTrait;
+    use HasSlug;
+    use InteractsWithMedia;
+    use HasFactory;
 
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -56,9 +60,11 @@ class Forum extends Model implements HasMedia
     public function latestDescendantsPost()
     {
         $last = 0;
-        foreach($this->descendants as $descendant) {
-            if($descendant->last) {
-                if($descendant->last->id > $last) $last = $descendant->last;
+        foreach ($this->descendants as $descendant) {
+            if ($descendant->last) {
+                if ($descendant->last->id > $last) {
+                    $last = $descendant->last;
+                }
             }
         }
         return $last;
@@ -80,8 +86,10 @@ class Forum extends Model implements HasMedia
         $this->save();
 
         // Spread the word if necessary
-        if($this->parent_id) {
-            if($this->parent->last->id < $last) $this->parent->evaluateLastPost();
+        if ($this->parent_id) {
+            if ($this->parent->last->id < $last) {
+                $this->parent->evaluateLastPost();
+            }
         }
     }
 
@@ -95,7 +103,9 @@ class Forum extends Model implements HasMedia
             $model->children()->delete();
 
             // make the parent check lastPost accuracy
-            if($model->parent) $model->parent->evaluateLastPost();
+            if ($model->parent) {
+                $model->parent->evaluateLastPost();
+            }
         });
     }
 
