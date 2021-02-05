@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

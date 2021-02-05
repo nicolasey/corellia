@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -17,7 +18,7 @@ class AssignationController extends Controller
     public function join(Group $group)
     {
         $data = request()->only(['element_type', 'element_id', 'isMain', 'isLeader', 'nb']);
-        $data['element_type'] = config("groups.inFaction.".$data['element_type']);
+        $data['element_type'] = config("groups.inFaction." . $data['element_type']);
         $data['group_id'] = $group->id;
 
         try {
@@ -59,7 +60,7 @@ class AssignationController extends Controller
     public function leave(Group $group)
     {
         $data = request()->only(['element_type', 'element_id', 'isMain', 'isLeader', 'nb']);
-        $data['element_type'] = config("groups.inFaction.".$data['element_type']);
+        $data['element_type'] = config("groups.inFaction." . $data['element_type']);
         $data['group_id'] = $group->id;
 
         try {

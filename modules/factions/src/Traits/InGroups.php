@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions\Traits;
 
 use Modules\Factions\Models\Assignation;
