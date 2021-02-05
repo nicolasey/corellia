@@ -11,7 +11,7 @@ class PersonnageDeleted extends Event
     public function __construct(Personnage $personnage)
     {
         $this->personnage = $personnage;
-        $this->name = "personnage.".$personnage->id.".deleted";
+        $this->name = "personnage::deleted";
     }
 
     public function broadcastOn()

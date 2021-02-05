@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages;
 
 use Illuminate\Events\EventServiceProvider;

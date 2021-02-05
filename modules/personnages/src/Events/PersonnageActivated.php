@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Events;
 
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,7 +17,7 @@ class PersonnageActivated extends Event
         $this->currentPersonnageName = $personnage->name;
         $this->user_id = $personnage->owner_id;
         $this->setColor($personnage);
-        $this->name = "[PJ] Personnage activated";
+        $this->name = "personnage::activated";
     }
 
     private function setColor(Personnage $active)
@@ -24,9 +25,9 @@ class PersonnageActivated extends Event
         /**
          * Find main group to set color
          */
-        if(!($active->assignations->isEmpty()))
+        if (! ($active->assignations->isEmpty() ))
         {
-            $mainGroup = $active->assignations->filter(function($item) {
+            $mainGroup = $active->assignations->filter(function ($item) {
                 return $item->isMain == true;
             })->first();
             $this->color = $mainGroup->color;

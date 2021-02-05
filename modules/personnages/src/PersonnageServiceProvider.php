@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages;
 
 use Illuminate\Support\ServiceProvider;
@@ -10,9 +11,9 @@ class PersonnageServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->setConfig(__DIR__."/../config.php", "personnages");
+        $this->setConfig(__DIR__ . "/../config.php", "personnages");
         $this->mapApiRoutes();
-        $this->loadMigrationsFrom(__DIR__."/../database/migrations");
+        $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
     }
 
     public function register()
@@ -31,7 +32,7 @@ class PersonnageServiceProvider extends ServiceProvider
             ->middleware("api")
             ->prefix("api")
             ->group(function () {
-                require __DIR__.'/../api.php';
+                require __DIR__ . '/../api.php';
             });
     }
 
@@ -47,7 +48,7 @@ class PersonnageServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($path, $key);
 
         $this->publishes([
-            $path => config_path($key.".php"),
+            $path => config_path($key . ".php"),
         ], "config");
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 Route::get("owner/{id}/personnages", "PersonnageController@byOwner")->name('personnages.byOwner');
 Route::get("owner/{id}/personnages", "PersonnageController@byOwnerActive")->name('personnages.active');
 // Route::get("personnages/{slug}", "PersonnageController@showBySlug")->where('slug', '[a-z]+');

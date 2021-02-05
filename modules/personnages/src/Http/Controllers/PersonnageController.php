@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -79,7 +80,7 @@ class PersonnageController extends Controller
             /**
              * If there is an avatar, attach it to newly created personnage
              */
-            if(request()->file("avatar")) {
+            if (request()->file("avatar")) {
                 $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatars');
             }
 
@@ -107,7 +108,7 @@ class PersonnageController extends Controller
             /**
              * If there is an avatar, attach it to newly created personnage
              */
-            if(request()->file("avatar")) {
+            if (request()->file("avatar")) {
                 $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatars');
             }
 
@@ -129,14 +130,16 @@ class PersonnageController extends Controller
         try {
             $personnage->delete();
 
-            if($personnage->active) {
+            if ($personnage->active) {
                 $personnage->setActive(false);
 
-                $otherPersonnages = $personnage->owner->personnages->filter(function($item) use($personnage) {
+                $otherPersonnages = $personnage->owner->personnages->filter(function ($item) use ($personnage) {
                     return $item->id !== $personnage->id;
                 });
 
-                if($otherPersonnages) $otherPersonnages->first()->setActive(true);
+                if ($otherPersonnages) {
+                    $otherPersonnages->first()->setActive(true);
+                }
             }
 
             event(new PersonnageDeleted($personnage));
@@ -238,7 +241,10 @@ class PersonnageController extends Controller
         DB::beginTransaction();
         try {
             $personnages = $personnage->owner->personnages;
-            foreach ($personnages as $pj) $pj->setActive(false);
+
+            foreach ($personnages as $pj) {
+                $pj->setActive(false);
+            }
 
             $personnage->setActive(true);
             DB::commit();

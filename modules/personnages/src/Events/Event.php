@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -8,9 +9,11 @@ use Illuminate\Queue\SerializesModels;
 
 class Event implements ShouldBroadcast
 {
-    protected $name;
+    use SerializesModels;
+    use InteractsWithSockets;
+    use Dispatchable;
 
-    use SerializesModels, InteractsWithSockets, Dispatchable;
+    protected $name;
 
     public function broadcastAs()
     {

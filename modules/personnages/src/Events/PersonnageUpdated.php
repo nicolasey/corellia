@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Events;
 
 use Modules\Personnages\Models\Personnage;
@@ -11,11 +12,11 @@ class PersonnageUpdated extends Event
     public function __construct(Personnage $personnage)
     {
         $this->personnage = $personnage;
-        $this->name = "personnage.".$personnage->id.".updated";
+        $this->name = "personnage::updated";
     }
 
     public function broadcastOn()
     {
-
+        //
     }
 }
