@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Modules\Auth\AuthModuleProvider::class,
+        Modules\Auth\AuthEventServiceProvider::class,
         Modules\Personnages\PersonnageServiceProvider::class,
         Modules\Personnages\PersonnageEventServiceProvider::class,
         Modules\Forum\ForumServiceProvider::class,

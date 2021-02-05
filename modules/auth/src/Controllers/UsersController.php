@@ -4,7 +4,9 @@ namespace Modules\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Modules\Auth\Events\UserCreated;
 
 class UsersController extends Controller
 {
@@ -37,10 +39,16 @@ class UsersController extends Controller
         ];
         request()->validate($rules, $input);
 
-        $user = User::create($input);
-        $token = Auth::login($user);
+        try {
+            $user = User::create($input);
+            $token = Auth::login($user);
 
-        return response()->json(compact($user, $token));
+            event(new UserCreated($user));
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return response()->json(['user' => $user, 'token' => $token]);
     }
 
     /**
