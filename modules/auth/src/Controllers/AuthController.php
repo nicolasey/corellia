@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -35,10 +36,10 @@ class AuthController extends Controller
                 "password" => "string|min:6|required"
             ];
             request()->validate($rules);
-    
+
             // Check credentials
             $credentials = request(['email', 'password']);
-            if(!$token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(["message" => "Login Failed"], 401);
             }
 
@@ -48,7 +49,7 @@ class AuthController extends Controller
 
             event(new UserLoggedIn($user));
             return response()->json(['user' => $user, 'token' => $token], 200);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json(["message" => "Login Failed exception"], 401);
         }
     }

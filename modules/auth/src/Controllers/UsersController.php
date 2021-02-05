@@ -67,7 +67,7 @@ class UsersController extends Controller
             "email" => "email",
             "password" => "string|min:6"
         ];
-        
+
         $user->update($input);
         return response()->json($user);
     }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Modules\Auth;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class AuthModuleProvider extends ServiceProvider 
+class AuthModuleProvider extends ServiceProvider
 {
     protected $namespace = "Modules\Auth\Controllers";
 
@@ -16,7 +17,7 @@ class AuthModuleProvider extends ServiceProvider
     public function boot()
     {
         $this->registerRoutes();
-        $this->loadMigrationsFrom(__DIR__."/../database/migrations");
+        $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
     }
 
     /**
@@ -31,7 +32,7 @@ class AuthModuleProvider extends ServiceProvider
         $this->mergeConfigFrom($path, $key);
 
         $this->publishes([
-            $path => config_path($key.".php"),
+            $path => config_path($key . ".php"),
         ], "config");
     }
 
@@ -43,7 +44,7 @@ class AuthModuleProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/../api.php');
+            $this->loadRoutesFrom(__DIR__ . '/../api.php');
         });
     }
 

@@ -11,7 +11,9 @@ use Illuminate\Queue\SerializesModels;
 
 class UserLoggedOut implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public $userId;
 
