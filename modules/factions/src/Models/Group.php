@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,12 +13,16 @@ use Spatie\Sluggable\SlugOptions;
 
 class Group extends Model implements HasMedia
 {
-    use SoftDeletes, HasSlug, InteractsWithMedia, HasFactory;
+    use SoftDeletes;
+    use HasSlug;
+    use InteractsWithMedia;
+    use HasFactory;
 
     protected $table = "groups";
     protected $guarded = [];
 
-    protected static function factory() {
+    protected static function factory()
+    {
         return GroupFactory::new();
     }
 
@@ -58,7 +63,7 @@ class Group extends Model implements HasMedia
      *
      * @return mixed
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')

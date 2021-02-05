@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions;
 
 use Illuminate\Events\EventServiceProvider;

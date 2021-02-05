@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions\Factories;
 
 use App\Models\User;

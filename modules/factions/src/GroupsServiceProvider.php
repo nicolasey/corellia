@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Factions;
 
 use Illuminate\Support\ServiceProvider;
@@ -10,9 +11,9 @@ class GroupsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->mapApiRoutes();
-        $this->mergeConfigFrom(__DIR__."/../config.php", "groups");
+        $this->mergeConfigFrom(__DIR__ . "/../config.php", "groups");
     }
 
     public function register()
@@ -26,7 +27,7 @@ class GroupsServiceProvider extends ServiceProvider
             ->middleware("api")
             ->prefix('api')
             ->group(function () {
-                require __DIR__.'/Http/api.php';
+                require __DIR__ . '/Http/api.php';
             });
     }
 }
