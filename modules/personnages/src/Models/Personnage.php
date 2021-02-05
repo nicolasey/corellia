@@ -13,6 +13,7 @@ use Modules\Personnages\Events\PersonnageUpdated;
 use Modules\Personnages\Traits\HasAvatar;
 use Overtrue\LaravelFollow\Followable;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -37,7 +38,7 @@ class Personnage extends Model implements HasMedia
 
     protected $hidden = ["deleted_at"];
 
-    protected $with = [];
+    protected $with = ['assignations'];
 
     public static $rules = [
         "name" => "unique:personnages|min:3|required",
@@ -139,6 +140,31 @@ class Personnage extends Model implements HasMedia
         } catch (\Exception $exception) {
             throw $exception;
         }
+    }
+
+    /**
+     * Register media collections for the personnage
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+              ->width(100)
+              ->height(100)
+              ->sharpen(10);
+    }
+
+    public function getAvatarAttribute()
+    {
+        $original = $this->getMedia('avatar')->first()->getUrl();
+        $thumb = $this->getMedia('avatar')->first()->getUrl('thumb');
+        return $thumb;
     }
 
     public static function boot()
