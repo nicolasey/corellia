@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Auth\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
