@@ -38,7 +38,7 @@ class Personnage extends Model implements HasMedia
 
     protected $hidden = ["deleted_at"];
 
-    protected $with = ['assignations'];
+    protected $with = ['assignations', 'faction'];
 
     public static $rules = [
         "name" => "unique:personnages|min:3|required",
@@ -165,6 +165,17 @@ class Personnage extends Model implements HasMedia
         $original = $this->getMedia('avatar')->first()->getUrl();
         $thumb = $this->getMedia('avatar')->first()->getUrl('thumb');
         return $thumb;
+    }
+
+    public function faction()
+    {
+        $assignations = $this->assignations()->where(["isMain" => true]);
+        // if ($assignations !== []) {
+        //     $assignations->filter(function ($item) {
+        //         return ($item->isMain && $item->group->isFaction && !$item->group->isSecret);
+        //     })->first()->group;
+        // }
+        return $assignations;
     }
 
     public static function boot()
