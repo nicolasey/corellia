@@ -40,7 +40,7 @@ class UsersController extends Controller
         $user = User::create($input);
         $token = Auth::login($user);
 
-        return response()->json(compact($user, $token));
+        return response()->json(['user' => $user, 'token' => $token], 200);
     }
 
     /**
