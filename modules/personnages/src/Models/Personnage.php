@@ -10,7 +10,6 @@ use Modules\Forum\Traits\PostsInForum;
 use Modules\Personnages\Events\PersonnageCreated;
 use Modules\Personnages\Events\PersonnageDeleted;
 use Modules\Personnages\Events\PersonnageUpdated;
-use Modules\Personnages\Traits\HasAvatar;
 use Overtrue\LaravelFollow\Followable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -27,7 +26,6 @@ class Personnage extends Model implements HasMedia
     use Followable;
     use HasFactory;
     use InGroups;
-    use HasAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -38,7 +36,7 @@ class Personnage extends Model implements HasMedia
 
     protected $hidden = ["deleted_at"];
 
-    protected $with = ['assignations', 'faction'];
+    protected $with = ['assignations'];
 
     public static $rules = [
         "name" => "unique:personnages|min:3|required",
@@ -149,22 +147,11 @@ class Personnage extends Model implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('avatar')->singleFile();
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')
-              ->width(100)
-              ->height(100)
-              ->sharpen(10);
-    }
-
-    public function getAvatarAttribute()
-    {
-        $original = $this->getMedia('avatar')->first()->getUrl();
-        $thumb = $this->getMedia('avatar')->first()->getUrl('thumb');
-        return $thumb;
+        $this->addMediaCollection('avatar')
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this->addMediaConversion('thumb')->width(100)->height(100);
+            });
     }
 
     public function faction()
