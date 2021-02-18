@@ -10,6 +10,7 @@ use Modules\Forum\Traits\PostsInForum;
 use Modules\Personnages\Events\PersonnageCreated;
 use Modules\Personnages\Events\PersonnageDeleted;
 use Modules\Personnages\Events\PersonnageUpdated;
+use Modules\Personnages\Traits\DefaultAvatar;
 use Overtrue\LaravelFollow\Followable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,6 +27,7 @@ class Personnage extends Model implements HasMedia
     use Followable;
     use HasFactory;
     use InGroups;
+    use DefaultAvatar;
 
     /**
      * The attributes that are mass assignable.

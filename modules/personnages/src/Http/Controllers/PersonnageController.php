@@ -12,6 +12,7 @@ use Modules\Personnages\Events\PersonnageKilled;
 use Modules\Personnages\Events\PersonnageResurrected;
 use Modules\Personnages\Events\PersonnageUpdated;
 use Modules\Personnages\Models\Personnage;
+use Modules\Personnages\Models\PersonnageResource;
 use Illuminate\Support\Facades\DB;
 
 class PersonnageController extends Controller
@@ -25,7 +26,7 @@ class PersonnageController extends Controller
      */
     public function index()
     {
-        return Personnage::all();
+        return PersonnageResource::collection(Personnage::all());
     }
 
     /**
@@ -36,7 +37,8 @@ class PersonnageController extends Controller
      */
     public function byOwnerActive(int $id)
     {
-        return Personnage::of($id)->active(true)->get();
+        $pj = Personnage::of($id)->active(true)->firstOrFail();
+        return new PersonnageResource($pj);
     }
 
     /**
@@ -47,18 +49,18 @@ class PersonnageController extends Controller
      */
     public function byOwner(int $id)
     {
-        return Personnage::of($id)->get();
+        return PersonnageResource::collection(Personnage::of($id)->get());
     }
 
     /**
      * Show a personnage
      *
      * @param Personnage $personnage
-     * @return Personnage
+     * @return PersonnageResource
      */
     public function show(Personnage $personnage)
     {
-        return $personnage->load("owner");
+        return new PersonnageResource($personnage->load("owner"));
     }
 
     /**
@@ -81,11 +83,11 @@ class PersonnageController extends Controller
              * If there is an avatar, attach it to newly created personnage
              */
             if (request()->file("avatar")) {
-                $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+                $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatar');
             }
 
             event(new PersonnageCreated($personnage));
-            return response()->json($personnage);
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -106,10 +108,10 @@ class PersonnageController extends Controller
             $personnage->update($data);
 
             /**
-             * If there is an avatar, attach it to newly created personnage
+             * If there is an avatar, attach it to given personnage
              */
             if (request()->file("avatar")) {
-                $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+                $personnage->addMediaFromRequest('avatar')->toMediaCollection('avatar');
             }
 
             event(new PersonnageUpdated($personnage));

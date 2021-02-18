@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Personnages\Traits;
 
 use Modules\Personnages\Models\Personnage;
