@@ -1,0 +1,39 @@
+GET http://corellia.test/api/groups
+
+###
+
+GET http://corellia.test/api/groups/1
+
+###
+
+GET http://corellia.test/api/groups/empire-galactique
+
+
+###
+
+POST http://corellia.test/api/groups
+Content-Type: 'application/json'
+Authorization: "Bearer {{$aadToken}}"
+
+{
+    "name": "Empire Galactique",
+    "color": "#FFF"
+}
+
+###
+
+PATCH http://corellia.test/api/groups/1
+Content-Type: 'application/json'
+Authorization: "Bearer {{$aadToken}}"
+
+{
+    "name": "Empire Galactique",
+    "color": "#FFF",
+    "isFaction": true
+}
+
+###
+
+DELETE http://corellia.test/api/groups/1
+Content-Type: 'application/json'
+Authorization: "Bearer {{$aadToken}}"
