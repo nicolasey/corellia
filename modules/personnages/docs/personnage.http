@@ -1,0 +1,58 @@
+GET http://corellia.test/api/personnages
+
+###
+
+GET http://corellia.test/api/personnages/1
+
+###
+
+GET http://corellia.test/api/personnages/luke-skywalker
+
+###
+
+POST http://corellia.test/api/personnages
+Content-Type: application/json
+Authorization: 'Bearer {{$aadToken}}'
+
+{
+    "name": "Luke Skywalker",
+    "age": "25",
+    "faction": 2
+}
+
+###
+
+PATCH http://corellia.test/api/personnages/1
+Content-Type: application/json
+Authorization: 'Bearer {{$aadToken}}'
+
+{
+    "name": "Luke Skywalker",
+    "age": "25",
+    "faction": 2
+}
+
+###
+
+DELETE http://corellia.test/api/personnages/1
+Authorization: 'Bearer {{$aadToken}}'
+
+###
+
+GET http://corellia.test/api/personnages/1/deactivate
+Authorization: 'Bearer {{$aadToken}}'
+
+###
+
+GET http://corellia.test/api/personnages/1/activate
+Authorization: 'Bearer {{$aadToken}}'
+
+###
+
+GET http://corellia.test/api/personnages/1/kill
+Authorization: 'Bearer {{$aadToken}}'
+
+###
+
+GET http://corellia.test/api/personnages/1/resurrect
+Authorization: 'Bearer {{$aadToken}}'
