@@ -38,6 +38,7 @@ class UsersController extends Controller
         request()->validate($rules, $input);
 
         $user = User::create($input);
+        $user->load("personnages");
         $token = Auth::login($user);
 
         return response()->json(['user' => $user, 'token' => $token], 200);
