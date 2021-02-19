@@ -115,7 +115,7 @@ class PersonnageController extends Controller
             }
 
             event(new PersonnageUpdated($personnage));
-            return response()->json($personnage);
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -163,7 +163,7 @@ class PersonnageController extends Controller
             $personnage->update(['active' => true]);
 
             event(new PersonnageActivated($personnage));
-            return $personnage;
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -182,7 +182,7 @@ class PersonnageController extends Controller
             $personnage->update(['active' => false]);
 
             event(new PersonnageDeactivated($personnage));
-            return $personnage;
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -203,7 +203,7 @@ class PersonnageController extends Controller
             Personnage::reguard();
 
             event(new PersonnageKilled($personnage));
-            return $personnage;
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -226,7 +226,7 @@ class PersonnageController extends Controller
             $this->changeTo($personnage);
 
             event(new PersonnageResurrected($personnage));
-            return $personnage;
+            return new PersonnageResource($personnage);
         } catch (\Exception $exception) {
             throw $exception;
         }
