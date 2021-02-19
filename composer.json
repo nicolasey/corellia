@@ -1,10 +1,19 @@
 {
-    "name": "laravel/laravel",
+    "name": "swor-jdr/corellia",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Laravel based narrative RPG platform for SWOR Star-Wars RPG game community",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "rpg",
+        "swor"
+    ],
+    "authors": [
+        {
+            "name": "Nicolas Seynaeve",
+            "email": "nicolas@productdream.fr",
+            "homepage": "https://github.com/nicolasey"
+        }
     ],
     "license": "MIT",
     "require": {
