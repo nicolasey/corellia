@@ -11,10 +11,10 @@ trait DefaultAvatar
 
     public function setDefaultAvatar()
     {
-        $current = $this->getFirstMediaUrl('avatar');
+        $current = $this->getFirstMediaUrl();
         if (!$current || $current === "") {
-            $avatar = $this->getDefaultAvatarPath();
-            $this->addMedia($avatar)->toMediaCollection('avatar');
+            $url = env("APP_URL") . "/default-avatar.jpg";
+            $this->addMediaFromUrl($url)->toMediaCollection('avatar');
         }
     }
 
