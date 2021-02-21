@@ -10,7 +10,8 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    use RefreshDatabase, DatabaseMigrations;
+    use RefreshDatabase;
+    use DatabaseMigrations;
 
     private $user;
 
@@ -26,7 +27,7 @@ class LoginTest extends TestCase
      * @return void
      * @test
      */
-    public function can_be_successful()
+    public function canBeSuccessful()
     {
         $response = $this->post('/auth/login', ["email" => $this->user->email, "password" => "password"]);
 
@@ -36,7 +37,7 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function fails_when_false_email()
+    public function failsWhenFalseEmail()
     {
         $response = $this->post('/auth/login', ["email" => "bibi@grogu.net", "password" => "password"]);
 
@@ -46,7 +47,7 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function fails_when_false_password()
+    public function failsWhenFalsePassword()
     {
         $response = $this->post('/auth/login', ["email" => $this->user->email, "password" => "fake"]);
 
