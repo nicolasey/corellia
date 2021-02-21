@@ -19,3 +19,14 @@ jobs:
           REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
           SOURCE: "./"
           TARGET: ${{ secrets.DEPLOY_TARGET }}
+      - name: Apply updates
+        uses: appleboy/ssh-action@main
+        with: 
+          host: ${{ secrets.DEPLOY_HOST }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          username: ${{ secrets.DEPLOY_USER }}
+          script : |
+            cd ${{ secrets.DEPLOY_TARGET }}
+            composer update
+            php artisan migrate
+            php artisan optimize
