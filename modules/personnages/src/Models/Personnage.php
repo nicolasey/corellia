@@ -129,13 +129,13 @@ class Personnage extends Model implements HasMedia
     /**
      * Set active to this personnage as given boolean
      *
-     * @param bool $active
+     * @param bool $isCurrent
      * @throws \Exception
      */
-    public function setActive(bool $active)
+    public function setCurrent(bool $isCurrent)
     {
         try {
-            $this->active = $active;
+            $this->current = $isCurrent;
             $this->save();
         } catch (\Exception $exception) {
             throw $exception;
@@ -176,10 +176,10 @@ class Personnage extends Model implements HasMedia
                 $personnages = $model->owner->personnages;
 
                 foreach ($personnages as $personnage) {
-                    $personnage->setActive(false);
+                    $personnage->setCurrent(false);
                 }
 
-                $model->setActive(true);
+                $model->setCurrent(true);
             }
         });
     }

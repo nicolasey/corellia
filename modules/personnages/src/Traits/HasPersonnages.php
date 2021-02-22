@@ -16,8 +16,8 @@ trait HasPersonnages
         return $this->hasMany(Personnage::class, "owner_id");
     }
 
-    public function activePersonnage()
+    public function currentPersonnage()
     {
-        return $this->personnages()->where("active", true);
+        return $this->personnages()->where("current", true);
     }
 }

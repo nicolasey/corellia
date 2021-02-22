@@ -11,6 +11,7 @@ use Modules\Personnages\Events\PersonnageDeleted;
 use Modules\Personnages\Events\PersonnageKilled;
 use Modules\Personnages\Events\PersonnageResurrected;
 use Modules\Personnages\Events\PersonnageUpdated;
+use Modules\Personnages\Events\PersonnageSwitch;
 use Modules\Personnages\Models\Personnage;
 use Modules\Personnages\Models\PersonnageResource;
 use Illuminate\Support\Facades\DB;
@@ -37,8 +38,8 @@ class PersonnageController extends Controller
      */
     public function byOwnerActive(int $id)
     {
-        $pj = Personnage::of($id)->active(true)->firstOrFail();
-        return new PersonnageResource($pj);
+        $pj = Personnage::of($id)->active(true)->get();
+        return PersonnageResource::collection($pj);
     }
 
     /**
@@ -245,12 +246,12 @@ class PersonnageController extends Controller
             $personnages = $personnage->owner->personnages;
 
             foreach ($personnages as $pj) {
-                $pj->setActive(false);
+                $pj->setCurrent(false);
             }
 
-            $personnage->setActive(true);
+            $personnage->setCurrent(true);
             DB::commit();
-            event(new PersonnageActivated($personnage));
+            event(new PersonnageSwitch($personnage));
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
