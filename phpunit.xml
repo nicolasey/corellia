@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
+    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -11,10 +11,25 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
+        <testsuite name="Auth">
+            <directory suffix="Test.php">./modules/auth/tests</directory>
+        </testsuite>
+        <testsuite name="Personnages">
+            <directory suffix="Test.php">./modules/personnages/tests</directory>
+        </testsuite>
+        <testsuite name="Factions">
+            <directory suffix="Test.php">./modules/factions/tests</directory>
+        </testsuite>
+        <testsuite name="Forum">
+            <directory suffix="Test.php">./modules/forum/tests</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>
+        </include>
+        <include>
+            <directory suffix=".php">./modules</directory>
         </include>
     </coverage>
     <php>
