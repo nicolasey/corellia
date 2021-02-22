@@ -56,3 +56,8 @@ Authorization: 'Bearer {{$aadToken}}'
 
 GET http://corellia.test/api/personnages/1/resurrect
 Authorization: 'Bearer {{$aadToken}}'
+
+###
+
+GET http://corellia.test/api/owner/1/personnages/
+
